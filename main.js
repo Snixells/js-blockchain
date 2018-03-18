@@ -34,7 +34,7 @@ class Block{
 class Blockchain {
     constructor(){
         this.chain = [this.createGenesisBlock()];
-        this.difficulty = 4;
+        this.difficulty = 1;
     }
 
     // Creating the first (genesis) block
@@ -71,7 +71,31 @@ class Blockchain {
         newBlock.hash = newBlock.mineBlock(this.difficulty);
         this.chain.push(newBlock);
     }
+    
+
+// Methods for querying the chain
+
+    // Querying for specific make
+    queryMake(make){
+        for(let i = 0; i < this.chain.length; i++){
+            if(this.chain[i].data.make == make){
+                console.log(this.chain[i].data);
+            } 
+        }
+    }
+
+    queryModel(model){
+        for(let i = 0; i < this.chain.length; i++){
+            if(this.chain[i].data.model == model){
+                console.log(this.chain[i].data);
+            } 
+        }
+    }
 }
+
+
+
+
 
 let businessBlockchain = new Blockchain();
 console.log("First Block...");
@@ -86,3 +110,5 @@ businessBlockchain.addBLock(new Block(businessBlockchain.chain.length, '18/03/20
 console.log("Is chain valid ? " + businessBlockchain.verifyChain());
 
 console.log(JSON.stringify(businessBlockchain, null, 3));
+
+businessBlockchain.queryModel("M2 Coupe");
