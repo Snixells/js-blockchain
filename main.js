@@ -13,6 +13,18 @@ class Block{
         return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)).toString();
     }
 
+        miningDifficulty(){
+        while(correctHash != true){
+            hash = this.calculateHash();
+            for(let i = 0; i<miningDifficultyNumber; i++){
+                if(hash[i] != 0){
+                    break;
+                }
+            }
+            correctHash = true;
+        }
+    }
+
 
 }
 
