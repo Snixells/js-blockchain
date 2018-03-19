@@ -1,9 +1,16 @@
 const SHA256 = require('crypto-js/sha256');
 
+
+// Class for the Transaction 
+class Transaction{
+    constructor(data){
+        this.data = data;
+    }
+}
+
 // Class for the Blocks the Chain will consist of later
 class Block{
-    constructor(index, timestamp, data, previousHash = ''){
-        this.index = index;
+    constructor(timestamp, data, previousHash = ''){
         this.data = data;
         this.timestamp = timestamp;
         this.previousHash = previousHash;
@@ -13,7 +20,7 @@ class Block{
 
     // Calculating Hash
     calculateHash(){
-        return SHA256(this.index + this.previousHash + this.timestamp + this.nonce + JSON.stringify(this.data)).toString();
+        return SHA256(this.previousHash + this.timestamp + this.nonce + JSON.stringify(this.data)).toString();
     }
 
     // Including poW -> specific number of zeros at beginning of hash 
@@ -23,18 +30,21 @@ class Block{
            this.hash = this.calculateHash();
        }
 
-       console.log("After " + this.nonce + " Successfull! -> Block Hash: " + this.hash);
+    //    console.log("After " + this.nonce + " Successfull! -> Block Hash: " + this.hash);
+       console.log("Mining Transaction; Hash -> " + this.hash + " After " + this.nonce + " calculations")
 
        return this.hash;
     }
-
 
 }
 
 class Blockchain {
     constructor(){
         this.chain = [this.createGenesisBlock()];
-        this.difficulty = 1;
+        this.difficulty = 4;
+        this.pendingTransactions = [];
+        this.miningReward = 10;
+        this.maxPendingTransactions = 3;
     }
 
     // Creating the first (genesis) block
@@ -65,12 +75,33 @@ class Blockchain {
             }   
     }
 
-    // Adding new Block to the chain
-    addBLock(newBlock){
-        newBlock.previousHash = this.getLatestBlock().hash;
-        newBlock.hash = newBlock.mineBlock(this.difficulty);
-        this.chain.push(newBlock);
+    // Because of block structure, transactions are first added to an array of pending transactions.
+    addTransactionsToPendingTransactions(transaction){
+        this.pendingTransactions.push(transaction)
+        let transactionNumber = this.pendingTransactions.length + this.chain.length - 1;
+        console.log("Added Transaction " + transactionNumber + " to pending Transactions");
+
+        // The transactions are sent to the mining method
+        this.minePendingTransactions(this.pendingTransactions);
     }
+
+    // Method for mining
+    minePendingTransactions(transactions){
+        // If enough transactions are collected, they are being mined
+        if(transactions.length >= this.maxPendingTransactions){
+            for(let i = 0; i <= transactions.length - 1; i++){
+                let newBlock = transactions[i];
+                newBlock.previousHash = this.getLatestBlock().hash;
+                newBlock.hash = newBlock.mineBlock(this.difficulty);
+                this.chain.push(newBlock);
+            } 
+
+            // Cause they are mined, the pending transactions array is being wiped
+            this.pendingTransactions = [];
+        }
+    }
+
+    
     
 
 // Methods for querying the chain
@@ -98,17 +129,16 @@ class Blockchain {
 
 
 let businessBlockchain = new Blockchain();
-console.log("First Block...");
-businessBlockchain.addBLock(new Block(1, '18/03/2018', { 'make' : 'Tesla', 'model' : 'Model S' }));
-console.log("Second Block...");
-businessBlockchain.addBLock(new Block(2, '19/04/2018', { 'make' : 'BMW' , 'model' : 'M2 Coupe'}));
-console.log("Third Block");
-businessBlockchain.addBLock(new Block(3, '19/04/2018', { 'make' : 'BMW' , 'model' : 'M3 Coupe'}));
-console.log("Fourth Block");
-businessBlockchain.addBLock(new Block(businessBlockchain.chain.length, '18/03/2018', { 'make' : 'Tesla', 'model' : 'Model X' }))
 
-console.log("Is chain valid ? " + businessBlockchain.verifyChain());
+businessBlockchain.addTransactionsToPendingTransactions(new Block('18/03/2018', { 'make' : 'Tesla', 'model' : 'Model S' }));
+businessBlockchain.addTransactionsToPendingTransactions(new Block('19/04/2018', { 'make' : 'BMW' , 'model' : 'M2 Coupe'}));
+businessBlockchain.addTransactionsToPendingTransactions(new Block('19/04/2018', { 'make' : 'BMW' , 'model' : 'M3 Coupe'}));
+businessBlockchain.addTransactionsToPendingTransactions(new Block('18/03/2018', { 'make' : 'Tesla', 'model' : 'Model X' }))
+businessBlockchain.addTransactionsToPendingTransactions(new Block('18/03/2018', { 'make' : 'Tesla', 'model' : 'Model S' }));
+businessBlockchain.addTransactionsToPendingTransactions(new Block('19/04/2018', { 'make' : 'BMW' , 'model' : 'M2 Coupe'}));
+businessBlockchain.addTransactionsToPendingTransactions(new Block('19/04/2018', { 'make' : 'BMW' , 'model' : 'M3 Coupe'}));
+businessBlockchain.addTransactionsToPendingTransactions(new Block('18/03/2018', { 'make' : 'Tesla', 'model' : 'Model X' }))
 
-console.log(JSON.stringify(businessBlockchain, null, 3));
 
-businessBlockchain.queryModel("M2 Coupe");
+
+// console.log(JSON.stringify(businessBlockchain, null, 3));
