@@ -3,10 +3,44 @@ const SHA256 = require('crypto-js/sha256');
 
 // Class for the Transaction 
 class Transaction {
-    constructor(timestamp, data) {
+    
+    constructor(data) {
         this.data = data;
-        this.timestamp = timestamp
+        this.timestamp = this.getDate();
         this.hash = '';
+    }
+
+    getDate(){
+        let timestamp = new Date();
+        let dd = timestamp.getDate();
+        let mm = timestamp.getMonth()+1;
+        let yyyy = timestamp.getFullYear();
+        let hh = timestamp.getHours();
+        let ss = timestamp.getSeconds();
+        let ms = timestamp.getMilliseconds();
+        
+        if(dd<10)
+            dd = '0' + dd
+        
+        if(mm<10) 
+            mm = '0' + mm
+
+        if(hh<10)
+            hh = '0' + mm
+
+        if(ss<10)
+            ss = '0' + ss
+
+        if(ms<10)
+            ms = '000' + ms;
+
+        if(ms<100)
+            ms = '00' + ms;
+
+        if(ms<1000)
+            ms = '0' + ms;
+
+        return yyyy + '/' + mm + '/' + dd + '/' + hh + '/' + ss +'/' + ms;
     }
 }
 
@@ -53,7 +87,7 @@ class Block {
 class Blockchain {
     constructor() {
         this.chain = [this.createGenesisBlock()];
-        this.difficulty = 2;
+        this.difficulty = 4;
         this.pendingTransactions = [];
         this.miningReward = 10;
         this.maxPendingTransactions = 3;
@@ -125,6 +159,10 @@ class Blockchain {
         this.pendingTransactions = [];
     }
 
+    addCar(make, model){
+        this.addTransactionsToPendingTransactions(new Transaction({ 'make': make, 'model': model }));
+    }
+
 
 
 
@@ -154,15 +192,15 @@ class Blockchain {
 
 let businessBlockchain = new Blockchain();
 
-businessBlockchain.addTransactionsToPendingTransactions(new Transaction('18/03/2018', { 'make': 'Tesla', 'model': 'Model S' }));
-businessBlockchain.addTransactionsToPendingTransactions(new Transaction('19/04/2018', { 'make': 'BMW', 'model': 'M2 Coupe' }));
-businessBlockchain.addTransactionsToPendingTransactions(new Transaction('19/04/2018', { 'make': 'BMW', 'model': 'M3 Coupe' }));
-businessBlockchain.addTransactionsToPendingTransactions(new Transaction('18/03/2018', { 'make': 'Tesla', 'model': 'Model X' }));
-businessBlockchain.addTransactionsToPendingTransactions(new Transaction('18/03/2018', { 'make': 'Tesla', 'model': 'Model S' }));
-businessBlockchain.addTransactionsToPendingTransactions(new Transaction('19/04/2018', { 'make': 'BMW', 'model': 'M2 Coupe' }));
-businessBlockchain.addTransactionsToPendingTransactions(new Transaction('19/04/2018', { 'make': 'BMW', 'model': 'M3 Coupe' }));
-businessBlockchain.addTransactionsToPendingTransactions(new Transaction('18/03/2018', { 'make': 'Tesla', 'model': 'Model X' }))
-
-
+businessBlockchain.addCar("Tesla", "Model 3");
+businessBlockchain.addCar("BMW", "M2 Coupe");
+businessBlockchain.addCar("Tesla", "Model X");
+businessBlockchain.addCar("Tesla", "Model S");
+businessBlockchain.addCar("BMW", "M4 Coupe");
+businessBlockchain.addCar("Tesla", "Model 3");
+businessBlockchain.addCar("BMW", "M2 Coupe");
+businessBlockchain.addCar("Tesla", "Model X");
+businessBlockchain.addCar("Tesla", "Model S");
+businessBlockchain.addCar("BMW", "M4 Coupe");
 
 console.log(JSON.stringify(businessBlockchain, null, 3));
