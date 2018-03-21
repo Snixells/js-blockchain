@@ -1,6 +1,12 @@
 const Transaction = require('./Transaction.js');
 const Block = require('./Block.js');
 
+const readline = require('readline');
+const read = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
 class Blockchain {
     constructor() {
         this.chain = [this.createGenesisBlock()];
@@ -9,6 +15,8 @@ class Blockchain {
         this.miningReward = 10;
         this.maxPendingTransactions = 3;
     }
+
+
 
     // Creating the first (genesis) block
     createGenesisBlock() {
@@ -76,8 +84,15 @@ class Blockchain {
         this.pendingTransactions = [];
     }
 
-    addCar(make, model){
-        this.addTransactionsToPendingTransactions(new Transaction({ 'make': make, 'model': model }));
+    addCar(newOwner, make, model, carID) {
+        this.addTransactionsToPendingTransactions(new Transaction({ 'oldOwner': "addToSystem", 'newOwner': newOwner, 'make': make, 'model': model, 'carID': carID }));
+    }
+
+    transferCar(oldOwner, newOwner){
+
+    }
+    transferObject(oldOwner, newOwner, ObjectID) {
+
     }
 
 
@@ -100,6 +115,20 @@ class Blockchain {
                 console.log(this.chain[i].data);
             }
         }
+    }
+
+    queryCarID(carID) {
+        let foundTransactions; 
+        for (let i = 0; i < this.chain.length - 1; i++) {
+            for (let k = 0; k < this.chain[i + 1].transactions.length; k++) {
+                if (this.chain[i + 1].transactions[k].data.carID == carID) {
+                    // console.log(this.chain[i + 1].transactions[k].data.oldOwner + " -> " + this.chain[i + 1].transactions[k].data.newOwner);
+                    foundTransactions.push(this.chain[i + 1].transactions[k])
+                }
+            }
+        }
+
+        return foundTransactions;
     }
 }
 
