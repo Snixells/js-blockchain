@@ -84,15 +84,25 @@ class Blockchain {
         this.pendingTransactions = [];
     }
 
+    // Method for adding a new car to the system
     addCar(newOwner, make, model, carID) {
         this.addTransactionsToPendingTransactions(new Transaction({ 'oldOwner': "addToSystem", 'newOwner': newOwner, 'make': make, 'model': model, 'carID': carID }));
     }
 
-    transferCar(oldOwner, newOwner){
-
+    // Transfering a char from oldOwner to newOwner
+    transferCar(newOwner, transaction){
+        if(this.checkOwner() == true){
+            this.addTransactionsToPendingTransactions(new Transaction({ 'oldOwner': transaction.data.newOwner, 'newOwner': newOwner, 'make': transaction.data.make, 
+                'model': transaction.data.model, 'carID': transaction.data.carID }));
+        }
     }
+
     transferObject(oldOwner, newOwner, ObjectID) {
 
+    }
+
+    checkOwner(){
+        return true;
     }
 
 
@@ -109,6 +119,7 @@ class Blockchain {
         }
     }
 
+    // Querying for specific car model 
     queryModel(model) {
         for (let i = 0; i < this.chain.length; i++) {
             if (this.chain[i].data.model == model) {
@@ -117,6 +128,7 @@ class Blockchain {
         }
     }
 
+    // Querying for carID -> every car has own ID in System, to keep track
     queryCarID(carID) {
         let foundTransactions = []; 
         for (let i = 0; i < this.chain.length - 1; i++) {
@@ -132,10 +144,16 @@ class Blockchain {
         return foundTransactions;
     }
 
+    // Printing the transaction query results
     printQueryResults(transactions){
         for(let i = 0; i < transactions.length; i++){
             console.log((i + 1) + ". Transaktion: " + transactions[i].data.oldOwner + " => " + transactions[i].data.newOwner);
         }
+    }
+
+    // Choose one of the query results
+    chooseQueryResult(number, transactions){
+        return transactions[number - 1];
     }
 }
 

@@ -19,4 +19,6 @@ businessBlockchain.addCar("2", "Tesla", "Model 3", "0006");
 
 let queryResults = businessBlockchain.queryCarID("0007");
 businessBlockchain.printQueryResults(queryResults);
+console.log("1. was chosen");
+businessBlockchain.transferCar("2", businessBlockchain.chooseQueryResult(1, queryResults));
 console.log(JSON.stringify(businessBlockchain, null, 3));
