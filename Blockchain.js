@@ -16,8 +16,6 @@ class Blockchain {
         this.maxPendingTransactions = 3;
     }
 
-
-
     // Creating the first (genesis) block
     createGenesisBlock() {
         return new Block("17/03/2018", "GenesisBlock", '');
@@ -90,22 +88,24 @@ class Blockchain {
     }
 
     // Transfering a char from oldOwner to newOwner
-    transferCar(newOwner, transaction){
-        if(this.checkOwner() == true){
-            this.addTransactionsToPendingTransactions(new Transaction({ 'oldOwner': transaction.data.newOwner, 'newOwner': newOwner, 'make': transaction.data.make, 
-                'model': transaction.data.model, 'carID': transaction.data.carID }));
+    transferCar(newOwner, transaction) {
+        if (this.checkOwner() == true) {
+            this.addTransactionsToPendingTransactions(new Transaction({
+                'oldOwner': transaction.data.newOwner, 'newOwner': newOwner, 'make': transaction.data.make,
+                'model': transaction.data.model, 'carID': transaction.data.carID
+            }));
         }
     }
 
     // Gets owner of 1 transaction 
-    getOwner(transaction){
+    getOwner(transaction) {
         return transaction.data.newOwner;
     }
 
     // Checks wether owner is owner of specific car
-    checkOwner(owner, searchedOwner){
+    checkOwner(owner, searchedOwner) {
         // if (owner == searchedOwner)
-            return true;
+        return true;
     }
 
     // Methods for querying the chain
@@ -130,7 +130,7 @@ class Blockchain {
 
     // Querying for carID -> every car has own ID in System, to keep track
     queryCarID(carID) {
-        let foundTransactions = []; 
+        let foundTransactions = [];
         for (let i = 0; i < this.chain.length - 1; i++) {
             for (let k = 0; k < this.chain[i + 1].transactions.length; k++) {
                 if (this.chain[i + 1].transactions[k].data.carID == carID) {
@@ -143,23 +143,24 @@ class Blockchain {
     }
 
     // Printing the transaction query results
-    printQueryResults(transactions){
-        for(let i = 0; i < transactions.length; i++){
+    printQueryResults(transactions) {
+        for (let i = 0; i < transactions.length; i++) {
             console.log((i + 1) + ". Transaktion: " + transactions[i].data.oldOwner + " => " + transactions[i].data.newOwner);
         }
     }
 
     // Choose one of the query results
-    chooseQueryResult(number, transactions){
+    chooseQueryResult(number, transactions) {
         return transactions[number - 1];
     }
 
     // Chooses the latest of transactions array
-    chooseLatestTransaction(transactions){
+    chooseLatestTransaction(transactions) {
         return this.chooseQueryResult(transactions.length, transactions)
     }
 
-    getOwnerFindByCarID(CarID){
+    // Searches for carID and finds the owner of that car
+    getOwnerFindByCarID(CarID) {
         let queryResults, lastTransaction;
         queryResults = this.queryCarID(CarID);
         lastTransaction = this.chooseLatestTransaction(queryResults);
