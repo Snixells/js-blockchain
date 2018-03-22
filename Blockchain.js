@@ -97,16 +97,16 @@ class Blockchain {
         }
     }
 
-    transferObject(oldOwner, newOwner, ObjectID) {
-
+    // Gets owner of 1 transaction 
+    getOwner(transaction){
+        return transaction.data.newOwner;
     }
 
-    checkOwner(){
-        return true;
+    // Checks wether owner is owner of specific car
+    checkOwner(owner, searchedOwner){
+        // if (owner == searchedOwner)
+            return true;
     }
-
-
-
 
     // Methods for querying the chain
 
@@ -134,8 +134,6 @@ class Blockchain {
         for (let i = 0; i < this.chain.length - 1; i++) {
             for (let k = 0; k < this.chain[i + 1].transactions.length; k++) {
                 if (this.chain[i + 1].transactions[k].data.carID == carID) {
-                    // console.log(this.chain[i + 1].transactions[k].data.oldOwner + " -> " + this.chain[i + 1].transactions[k].data.newOwner);
-                    console.log(this.chain[i + 1].transactions[k]);
                     foundTransactions.push(this.chain[i + 1].transactions[k])
                 }
             }
@@ -154,6 +152,18 @@ class Blockchain {
     // Choose one of the query results
     chooseQueryResult(number, transactions){
         return transactions[number - 1];
+    }
+
+    // Chooses the latest of transactions array
+    chooseLatestTransaction(transactions){
+        return this.chooseQueryResult(transactions.length, transactions)
+    }
+
+    getOwnerFindByCarID(CarID){
+        let queryResults, lastTransaction;
+        queryResults = this.queryCarID(CarID);
+        lastTransaction = this.chooseLatestTransaction(queryResults);
+        return this.getOwner(lastTransaction)
     }
 }
 

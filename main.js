@@ -21,4 +21,7 @@ let queryResults = businessBlockchain.queryCarID("0007");
 businessBlockchain.printQueryResults(queryResults);
 console.log("1. was chosen");
 businessBlockchain.transferCar("2", businessBlockchain.chooseQueryResult(1, queryResults));
-console.log(JSON.stringify(businessBlockchain, null, 3));
+
+console.log(businessBlockchain.getOwnerFindByCarID("0006"));
+
+// console.log(JSON.stringify(businessBlockchain, null, 3));
