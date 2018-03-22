@@ -118,17 +118,24 @@ class Blockchain {
     }
 
     queryCarID(carID) {
-        let foundTransactions; 
+        let foundTransactions = []; 
         for (let i = 0; i < this.chain.length - 1; i++) {
             for (let k = 0; k < this.chain[i + 1].transactions.length; k++) {
                 if (this.chain[i + 1].transactions[k].data.carID == carID) {
                     // console.log(this.chain[i + 1].transactions[k].data.oldOwner + " -> " + this.chain[i + 1].transactions[k].data.newOwner);
+                    console.log(this.chain[i + 1].transactions[k]);
                     foundTransactions.push(this.chain[i + 1].transactions[k])
                 }
             }
         }
 
         return foundTransactions;
+    }
+
+    printQueryResults(transactions){
+        for(let i = 0; i < transactions.length; i++){
+            console.log((i + 1) + ". Transaktion: " + transactions[i].data.oldOwner + " => " + transactions[i].data.newOwner);
+        }
     }
 }
 
