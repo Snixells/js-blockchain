@@ -14,6 +14,7 @@ http.createServer((request, response) => {
         }).on('end', () => {
             body = Buffer.concat(body).toString()
             response.end(body);
+            
         });
     } else {
         response.statusCode = 404;
