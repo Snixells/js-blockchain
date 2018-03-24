@@ -18,6 +18,7 @@ http.createServer((request, response) => {
     } else {
         response.statusCode = 404;
         response.end();
+        
     }
 
     // // When an error occurs
