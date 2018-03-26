@@ -1,12 +1,6 @@
 const Transaction = require('./Transaction.js');
 const Block = require('./Block.js');
 
-const readline = require('readline');
-const read = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
 class Blockchain {
     constructor() {
         this.chain = [this.createGenesisBlock()];
