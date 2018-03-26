@@ -1,11 +1,10 @@
-const fs = require('fs');
-
-let rawdata = fs.readFileSync('js-blockchain/chain.json');
-let importedBlockchain = JSON.parse(rawdata);
-
 const Blockchain = require('./Blockchain.js');
 const Transaction = require('./Transaction.js');
 const Block = require('./Block.js');
+
+var MongoClient = require('mongodb').MongoClient;
+var url = 'mongodb://localhost:27017/mydb';
+
 
 let businessBlockchain = new Blockchain();
 
@@ -30,5 +29,3 @@ businessBlockchain.transferCar("2", businessBlockchain.chooseQueryResult(1, quer
 console.log(businessBlockchain.getOwnerFindByCarID("0006"));
 
 // console.log(JSON.stringify(businessBlockchain, null, 3));
-
-console.log("Blockchain: %j", importedBlockchain);
