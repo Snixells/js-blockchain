@@ -19,7 +19,9 @@ let businessBlockchain = new Blockchain();
     // businessBlockchain.addCar("2", "Tesla", "Model 3", "0006");
 
 
-    DatabaseBlockchain.getChain();
+    DatabaseBlockchain.getChain(callback => {
+        console.log(callback);
+    });
 
 // let queryResults = businessBlockchain.queryCarID("0007");
 // businessBlockchain.printQueryResults(queryResults);
