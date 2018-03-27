@@ -28,4 +28,4 @@ businessBlockchain.transferCar("2", businessBlockchain.chooseQueryResult(1, quer
 
 console.log(businessBlockchain.getOwnerFindByCarID("0006"));
 
-// console.log(JSON.stringify(businessBlockchain, null, 3));
+console.log(JSON.stringify(businessBlockchain, null, 3));
