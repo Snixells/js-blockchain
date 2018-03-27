@@ -42,7 +42,7 @@ module.exports = {
 
     // }
 
-    getChain(chain, callback) {
+    getChain(callback) {
         // Connecting to database
         let connection = null;
         rethinkdb.connect({ host: 'localhost', port: 28015 }, (err, conn) => {
