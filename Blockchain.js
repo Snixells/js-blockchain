@@ -1,10 +1,11 @@
 const Transaction = require('./Transaction.js');
 const Block = require('./Block.js');
+const DatabaseBlockchain = require('./chaindb.js');
 
 class Blockchain {
     constructor() {
         this.chain = [this.createGenesisBlock()];
-        this.difficulty = 2;
+        this.difficulty = 0;
         this.pendingTransactions = [];
         this.miningReward = 10;
         this.maxPendingTransactions = 3;
@@ -23,6 +24,7 @@ class Blockchain {
 
     pushNewBlock(block) {
         this.chain.push(block);
+        DatabaseBlockchain.insertToDatabase(block);
     }
 
 
