@@ -24,7 +24,7 @@ class Blockchain {
 
     pushNewBlock(block) {
         this.chain.push(block);
-        DatabaseBlockchain.insertToDatabase(block);
+        DatabaseBlockchain.insertToChainDatabase(block);
     }
 
 
@@ -52,6 +52,11 @@ class Blockchain {
         let transactionNumber = this.pendingTransactions.length;
         let blockNumber = this.chain.length;
         console.log("Added Transaction " + transactionNumber + " to Block " + blockNumber + " -> unconfirmed");
+
+        // Adding unconfirmed transaction to database
+        console.log('Adding to db!!');
+        console.log(transaction);
+        DatabaseBlockchain.insertToUnconfirmedDatabase(transaction);
 
         // When enough transactions, they are sent to the mine method
         if (this.pendingTransactions.length >= this.maxPendingTransactions) {

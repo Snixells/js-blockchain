@@ -5,8 +5,8 @@ const DatabaseBlockchain = require('./chaindb.js');
 
 let businessBlockchain = new Blockchain();
 
-    // businessBlockchain.addCar("1", "Tesla", "Model 3", "0001");
-    // businessBlockchain.addCar("1", "BMW", "M2 Coupe", "0002");
+    businessBlockchain.addCar("1", "Tesla", "Model 3", "0001");
+    businessBlockchain.addCar("1", "BMW", "M2 Coupe", "0002");
     // businessBlockchain.addCar("2", "Tesla", "Model X", "0003");
     // businessBlockchain.addCar("2", "Tesla", "Model S", "0004");
     // businessBlockchain.addCar("2", "BMW", "M4 Coupe", "0005");
@@ -19,7 +19,7 @@ let businessBlockchain = new Blockchain();
     // businessBlockchain.addCar("2", "Tesla", "Model 3", "0006");
 
 
-    DatabaseBlockchain.getChain(callback => {
+    DatabaseBlockchain.getUnconfirmedDB(callback => {
         console.log(callback);
     });
 
@@ -30,4 +30,4 @@ let businessBlockchain = new Blockchain();
 
 // console.log(businessBlockchain.getOwnerFindByCarID("0006"));
 
-// console.log(JSON.stringify(businessBlockchain, null, 3));
+console.log(JSON.stringify(businessBlockchain, null, 3));
