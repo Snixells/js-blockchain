@@ -70,7 +70,6 @@ module.exports = {
                 if (err) throw err;
                 cursor.toArray((err, result) => {
                     if (err) throw err;
-                    console.log("UNCONFIRMED: " + result);
                     callback(result);
                 })
             })

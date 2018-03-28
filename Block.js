@@ -1,11 +1,12 @@
 // Class for the Blocks the Chain will consist of later
 
 const SHA256 = require('crypto-js/sha256');
+const Transaction = require('./Transaction');
 
 
 class Block {
-    constructor(timestamp, transactions, previousHash = '') {
-        this.timestamp = timestamp;
+    constructor(transactions, previousHash = '') {
+        this.timestamp = this.getDate;
         this.transactions = transactions;
         this.previousHash = previousHash;
         this.hash = '';
@@ -38,6 +39,39 @@ class Block {
         console.log("Mining Block ; Hash -> " + this.hash + " After " + this.nonce + " calculations")
 
         return this.hash;
+    }
+
+    getDate(){
+        let timestamp = new Date();
+        let dd = timestamp.getDate();
+        let mm = timestamp.getMonth()+1;
+        let yyyy = timestamp.getFullYear();
+        let hh = timestamp.getHours();
+        let ss = timestamp.getSeconds();
+        let ms = timestamp.getMilliseconds();
+        
+        if(dd<10)
+            dd = '0' + dd
+        
+        if(mm<10) 
+            mm = '0' + mm
+
+        if(hh<10)
+            hh = '0' + mm
+
+        if(ss<10)
+            ss = '0' + ss
+
+        if(ms<10)
+            ms = '000' + ms;
+
+        if(ms<100)
+            ms = '00' + ms;
+
+        if(ms<1000)
+            ms = '0' + ms;
+
+        return yyyy + '/' + mm + '/' + dd + '/' + hh + '/' + ss +'/' + ms;
     }
 
 }
