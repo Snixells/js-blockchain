@@ -5,7 +5,7 @@ const DatabaseBlockchain = require('./chaindb.js');
 
 let businessBlockchain = new Blockchain();
 
-    // businessBlockchain.addCar("1", "Tesla", "Model 3", "0001");
+    businessBlockchain.addCar("1", "Tesla", "Model 3", "0001");
     // businessBlockchain.addCar("1", "BMW", "M2 Coupe", "0002");
     // businessBlockchain.addCar("2", "Tesla", "Model X", "0003");
     // businessBlockchain.addCar("2", "Tesla", "Model S", "0004");
@@ -23,13 +23,19 @@ let businessBlockchain = new Blockchain();
     //     console.log(callback);
     // });
 
-    businessBlockchain.validateTransactions();
-// let queryResults = businessBlockchain.queryCarID("0007");
+    // businessBlockchain.validateTransactions();
+
+    // DatabaseBlockchain.checkWhetherDatabaseEmpty(callback => {
+    //     if(callback)
+    //         console.log("EMPTY");
+    // });
+    
+// ueryResults = businessBlockchain.queryCarID("0007");
 // businessBlockchain.printQueryResults(queryResults);
 // console.log("1. was chosen");
 // businessBlockchain.transferCar("2", businessBlockchain.chooseQueryResult(1, queryResults));
 
 // console.log(businessBlockchain.getOwnerFindByCarID("0006"));
 
-console.log(JSON.stringify(businessBlockchain, null, 3));
+// console.log(JSON.stringify(businessBlockchain, null, 3));
 

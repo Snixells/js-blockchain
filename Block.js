@@ -6,7 +6,7 @@ const Transaction = require('./Transaction');
 
 class Block {
     constructor(transactions, previousHash = '') {
-        this.timestamp = this.getDate;
+        this.timestamp = this.getDate();
         this.transactions = transactions;
         this.previousHash = previousHash;
         this.hash = '';
@@ -19,7 +19,7 @@ class Block {
     }
 
     // Calculating Hash for Block -> using hashes of all transactions inside that block
-    calculaHashBlock(transactions) {
+    calculateHash(transactions) {
         let hashNumber = "";
         for (let i = 0; i < this.transactions.length; i++) {
             hashNumber += JSON.stringify(transactions[i].hash);
@@ -33,7 +33,7 @@ class Block {
     mineBlock(transactions, difficulty) {
         while (this.hash.substring(0, difficulty) !== Array(difficulty + 1).join("0")) {
             this.nonce += 1;
-            this.hash = this.calculaHashBlock(transactions);
+            this.hash = this.calculateHash(transactions);
         }
 
         console.log("Mining Block ; Hash -> " + this.hash + " After " + this.nonce + " calculations")

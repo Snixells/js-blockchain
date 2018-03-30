@@ -67,28 +67,28 @@ class Blockchain {
 
     // Validating Transacions which are in "unconfirmed"
 
-    validateTransactions() {
-        let unvalidatedTransactions, transactionsToValidate = [];
-        DatabaseBlockchain.getUnconfirmedDB(result => {
-            unvalidatedTransactions = result;
-            console.log("UNVALIDATED");
-            for (let i = 0; i < unvalidatedTransactions.length; i++) {
-                transactionsToValidate.push((new Transaction({
-                    'oldOwner': unvalidatedTransactions[i].data.oldOwner, 'newOwner': unvalidatedTransactions[i].data.newOwner, 'make': unvalidatedTransactions[i].data.make,
-                    'model': unvalidatedTransactions[i].data.model, 'carID': unvalidatedTransactions[i].data.carID
-                })));
-            }
+    // validateTransactions() {
+    //     let unvalidatedTransactions, transactionsToValidate = [];
+    //     DatabaseBlockchain.getUnconfirmedDB(result => {
+    //         unvalidatedTransactions = result;
+    //         console.log("UNVALIDATED");
+    //         for (let i = 0; i < unvalidatedTransactions.length; i++) {
+    //             transactionsToValidate.push((new Transaction({
+    //                 'oldOwner': unvalidatedTransactions[i].data.oldOwner, 'newOwner': unvalidatedTransactions[i].data.newOwner, 'make': unvalidatedTransactions[i].data.make,
+    //                 'model': unvalidatedTransactions[i].data.model, 'carID': unvalidatedTransactions[i].data.carID
+    //             })));
+    //         }
 
-            for (let i = 0; i < transactionsToValidate.length; i++) {
-                console.log("Will be validated: " + transactionsToValidate[i], null, 2);
-            }
+    //         for (let i = 0; i < transactionsToValidate.length; i++) {
+    //             console.log("Will be validated: " + transactionsToValidate[i], null, 2);
+    //         }
 
-            console.log(JSON.stringify(transactionsToValidate[2], null, 3));
-            this.addBlockOfValidatedTransactions(transactionsToValidate);
+    //         console.log(JSON.stringify(transactionsToValidate[2], null, 3));
+    //         this.addBlockOfValidatedTransactions(transactionsToValidate);
 
-            // SEND TO PEERS TO CONSENSUS (LATER, MAYBE HERE SOMEWHERE)
-        });
-}
+    //         // SEND TO PEERS TO CONSENSUS (LATER, MAYBE HERE SOMEWHERE)
+    //     });
+// }
 
 // Method for mining
 
@@ -103,6 +103,8 @@ addBlockOfValidatedTransactions(transactions){
 
     this.chain.push(newBlock);
     console.log("pushed!");
+
+    return newBlock;
 
 }
 

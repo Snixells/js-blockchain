@@ -1,10 +1,15 @@
 // Class for the Transaction 
+
+const SHA256 = require('crypto-js/sha256');
+
+
 class Transaction {
     
     constructor(data) {
         this.data = data;
         this.timestamp = this.getDate();
-        this.hash = '';
+        this.hash = this.calculateHash();
+        console.log(this.hash);
     }
 
     getDate(){
@@ -38,6 +43,10 @@ class Transaction {
             ms = '0' + ms;
 
         return yyyy + '/' + mm + '/' + dd + '/' + hh + '/' + ss +'/' + ms;
+    }
+
+    calculateHash(){
+        return SHA256(this.timestamp + JSON.stringify(this.data)).toString();
     }
 }
 

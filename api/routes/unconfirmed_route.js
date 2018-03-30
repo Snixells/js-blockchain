@@ -8,8 +8,8 @@ router.get('/', (req, res, next) => {
     })
 })
 
-// router.post('/validate', (req, res, next= => {
-//     // Validating Transactions
-// }))
+router.post('/validate', (req, res, next) => {
+    
 
-module.exports = router;
+}),
+    module.exports = router;
